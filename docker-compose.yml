@@ -1,0 +1,38 @@
+services:
+  flover:
+    image: flover
+    container_name: flover
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./uploads/:/app/uploads
+    environment:
+      - DATABASE_URI=mongodb://mongo:27017
+      - PORT=${PORT}
+      - SECRET=${SECRET}
+      - ENV=prod
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-data/:/data/db
+    command: ["mongod", "--logpath", "/dev/null" ]
+  cloudpub:
+    image: cloudpub/cloudpub:latest
+    network_mode: host
+    environment:
+      - TOKEN=${CLOUDPUB_TOKEN}
+    command: publish http ${PORT}
+    volumes:
+      - cloudpub-config:/home/cloudpub
+    depends_on:
+      - flover
+
+volumes:
+  cloudpub-config: {}

@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+input {
+  @apply focus:outline-none;
+}
+
+.geist {
+  font-family: "Geist", sans-serif;
+}
