@@ -3,6 +3,7 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { useChatStore } from "./useChatStore";
+import { unsubscribeFromPush } from "../lib/push";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -94,6 +95,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: null });
       toast.success("Успешный выход");
       get().disconnectSocket();
+      await unsubscribeFromPush();
     } catch (error) {
       console.error(`Logout: ${error}`);
       toast.error(`Ошибка выхода`);
