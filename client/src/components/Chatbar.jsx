@@ -7,6 +7,7 @@ import { avatarPath, formatTime } from "../lib/utils";
 import { useAuthStore } from "../store/useAuthStore";
 import { useRef } from "react";
 import ChatSearch from "./ChatSearch";
+import { useNavigate } from "react-router";
 
 export default function Chatbar() {
   const {
@@ -14,12 +15,12 @@ export default function Chatbar() {
     getFilteredGlobalChats,
     chats,
     selectedChat,
-    setSelectedChat,
     isChatsLoading,
   } = useChatStore();
   const { onlineChats } = useAuthStore();
   const [filterValue, setFilterValue] = useState("");
   const filterTimeoutRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (filterValue === "") {
@@ -41,6 +42,11 @@ export default function Chatbar() {
   useEffect(() => {
     getChats();
   }, [getChats]);
+
+  function openChat(chat) {
+    navigate(`/${chat.user._id}`);
+    setFilterValue("");
+  }
 
   if (isChatsLoading)
     // if (true)
@@ -64,10 +70,7 @@ export default function Chatbar() {
         {chats.map((chat) => (
           <button
             key={chat.user._id}
-            onClick={() => {
-              setSelectedChat(chat.user);
-              setFilterValue("");
-            }}
+            onClick={() => openChat(chat)}
             className={`w-full py-2 px-3 flex hover:bg-base-200 hover:cursor-pointer transition-colors border-b border-base-300 relative ${
               selectedChat?._id === chat.user._id ? "bg-base-200" : ""
             }`}

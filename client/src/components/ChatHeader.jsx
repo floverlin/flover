@@ -2,17 +2,23 @@ import { ChevronLeft, X } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 import { avatarPath } from "../lib/utils";
+import { useNavigate } from "react-router";
 
 export default function ChatHeader() {
-  const { selectedChat, setSelectedChat } = useChatStore();
+  const { selectedChat } = useChatStore();
   const { onlineChats } = useAuthStore();
+  const navigate = useNavigate();
+
+  function closeChat() {
+    navigate("/");
+  }
 
   return (
     <div className="p-1.5 px-4 border-b border-accent/30">
       <div className="flex items-center gap-4">
         <button
           className="flex items-center justify-center md:hidden hover:cursor-pointer"
-          onClick={() => setSelectedChat(null)}
+          onClick={closeChat}
         >
           <ChevronLeft />
         </button>
@@ -38,7 +44,7 @@ export default function ChatHeader() {
 
         <button
           className="hidden md:inline ml-auto hover:cursor-pointer"
-          onClick={() => setSelectedChat(null)}
+          onClick={closeChat}
         >
           <X />
         </button>

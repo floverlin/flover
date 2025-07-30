@@ -3,12 +3,18 @@
 DATABASE_URI=mongo_connection_string
 PORT=port
 SECRET=secret_string
-ENV="dev" | "prod"
+ENV=dev | prod
+VAPID_PUBLIC_KEY=vapid_public_key
+VAPID_PRIVATE_KEY=vapid_private_key
 ```
 
 # Переменные окружения для docker-compose
+## Как у сервера, но без:
 ```
-PORT=port
-SECRET=secret_string
-CLOUDPUB_TOKEN="token from cloub_pub"
+ENV=prod
+DATABASE_URI=mongodb://mongo:27017
+```
+## и с:
+```
+CLOUDPUB_TOKEN=token_from_cloubPub
 ```

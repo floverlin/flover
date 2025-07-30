@@ -13,12 +13,15 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
+      filename: "sw.js",
+      strategies: "injectManifest",
       manifest: {
         name: "flover messager",
         short_name: "flover",
         description: "messager",
         background_color: "#000000",
         theme_color: "#000000",
+        start_url: "/",
         icons: [
           {
             src: "/icon-192.png",

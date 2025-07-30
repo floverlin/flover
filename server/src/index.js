@@ -3,6 +3,7 @@ import express from "express";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import userRoutes from "./routes/user.route.js";
+import pushRoutes from "./routes/push.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import { privateProtect } from "./middlewares/private.middleware.js";
@@ -11,6 +12,7 @@ import http from "node:http";
 import path from "node:path";
 import { createSocket } from "./lib/socket.js";
 import process from "node:process";
+import webPush from "web-push";
 
 const app = express();
 const server = new http.Server(app);
@@ -26,6 +28,12 @@ if (process.env.ENV !== "prod") {
   }
 }
 const index = path.join(dist, "index.html");
+
+webPush.setVapidDetails(
+  "mailto:xxw1ldl1nxx@gmail.com",
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
+);
 
 createSocket(server);
 
@@ -44,6 +52,8 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/push", pushRoutes);
+app.use("/api/", (req, res) => res.status(404).json({ message: "not found" }));
 
 app.use((req, res) => {
   res.sendFile(index);

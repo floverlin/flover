@@ -5,6 +5,7 @@ import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import { io } from "../lib/socket.js";
 import messageService from "../services/message.service.js";
+import { sendPush } from "../lib/push.js";
 
 const M = "message controller";
 
@@ -108,6 +109,16 @@ export async function sendMessage(req, res) {
 
     const recieverIDs = getSocketIDs(chatID);
     if (recieverIDs) io.to(Array.from(recieverIDs)).emit("x-message", message);
+
+    const reciever = await User.findById(chatID);
+    const pushPayload = {
+      title: "Новое сообщение!",
+      body: `${req.user.username}: ${message.text || "прислал(а) изображение"}`,
+      data: {
+        url: `/${userID}`,
+      },
+    };
+    await sendPush(reciever, pushPayload);
 
     res.status(201).json(message);
   } catch (error) {

@@ -40,7 +40,9 @@ export default function App() {
           <Route
             path="/"
             element={authUser ? <HomePage /> : <Navigate to="/login" />}
-          />
+          >
+            <Route path=":chatID" element={<></>} />
+          </Route>
           <Route
             path="/signup"
             element={!authUser ? <SignUpPage /> : <Navigate to="/" />}

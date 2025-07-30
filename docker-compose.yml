@@ -12,6 +12,8 @@ services:
       - PORT=${PORT}
       - SECRET=${SECRET}
       - ENV=prod
+      - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
     depends_on:
       - mongo
   mongo:
@@ -22,7 +24,7 @@ services:
       - 27017:27017
     volumes:
       - ./mongo-data/:/data/db
-    command: ["mongod", "--logpath", "/dev/null" ]
+    command: ["mongod", "--logpath", "/dev/null"]
   cloudpub:
     image: cloudpub/cloudpub:latest
     network_mode: host

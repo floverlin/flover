@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const Subscription = {
+  endpoint: String,
+  keys: {
+    p256dh: String,
+    auth: String,
+  },
+};
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -18,6 +26,10 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    pushSubscriptions: {
+      type: [Subscription],
+      default: [],
     },
   },
   { timestamps: true }

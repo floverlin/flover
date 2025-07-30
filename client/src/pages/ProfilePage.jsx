@@ -4,6 +4,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useState } from "react";
 import { avatarPath, validateImageFile } from "../lib/utils";
 import toast from "react-hot-toast";
+import NotificationToggle from "../components/NotificationToggle";
 
 export default function ProfilePage() {
   const {
@@ -106,6 +107,16 @@ export default function ProfilePage() {
           {isUpdatingProfile ? "Отправка..." : "Обновить"}
         </button>
       </form>
+
+      <div className="w-full md:w-xl mx-auto mt-8 border-2 border-dashed border-base-content/40 rounded-xl p-6">
+        <h2 className="text-lg font-medium mb-4">Настройки</h2>
+        <div className="space-y-3 text-sm">
+          <div className="flex items-center justify-between py-2 border-b border-base-300">
+            <span>Уведомления</span>
+            <NotificationToggle />
+          </div>
+        </div>
+      </div>
 
       <div className="w-full md:w-xl mx-auto mt-8 border-2 border-dashed border-base-content/40 rounded-xl p-6">
         <h2 className="text-lg font-medium mb-4">Информация о сервисе</h2>
