@@ -22,13 +22,17 @@ export default function App() {
   if (isCheckingAuth && !authUser)
     // if (true)
     return (
-      <Main scrollable={false} className="justify-center gap-8">
-        <div className="flex gap-2 text-6xl font-bold text-primary">
-          <Bird className="size-18" />
-          фловер
-        </div>
-        <Loader className="size-14 animate-spin text-primary" />
-      </Main>
+      <Theme>
+        <Geist>
+          <Main scrollable={false} className="justify-center gap-8">
+            <div className="flex gap-2 text-6xl font-bold text-primary">
+              <Bird className="size-18" />
+              фловер
+            </div>
+            <Loader className="size-14 animate-spin text-primary" />
+          </Main>
+        </Geist>
+      </Theme>
     );
 
   return (
