@@ -16,9 +16,9 @@ export default defineConfig({
       filename: "sw.js",
       strategies: "injectManifest",
       manifest: {
-        name: "flover messager",
-        short_name: "flover",
-        description: "messager",
+        name: "фловер",
+        short_name: "фловер",
+        description: "web messager",
         background_color: "#000000",
         theme_color: "#000000",
         start_url: "/",

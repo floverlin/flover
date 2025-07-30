@@ -167,7 +167,7 @@ export default function SignUpPage() {
       {/* right */}
       <Welcome
         className="hidden lg:flex"
-        title="Присоединяйтесь к сообществу flover"
+        title="Присоединяйтесь к фловер сообществу"
         text="Оставайтесь на связи с близкими в любое время, в любом месте. Присоединяйтесь и начинайте общение!"
         linkAddr="/login"
         linkText="Уже есть аккаунт?"

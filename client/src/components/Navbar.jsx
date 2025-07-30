@@ -16,7 +16,7 @@ export default function Navbar({ heigth }) {
             <Bird className="size-6 text-primary" />
           </div>
           <h1 className="text-xl font-bold text-base-content/80 hover:text-base-content transition-colors">
-            flover
+            фловер
           </h1>
         </Link>
 
