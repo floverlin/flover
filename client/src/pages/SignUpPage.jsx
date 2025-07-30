@@ -42,9 +42,9 @@ export default function SignUpPage() {
   }
 
   return (
-    <>
+    <div className="w-full h-full flex">
       {/* left */}
-      <div className="flex flex-col justify-center items-center p-6 md:p-12">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 md:p-12">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
@@ -166,12 +166,12 @@ export default function SignUpPage() {
       </div>
       {/* right */}
       <Welcome
-        className="hidden lg:flex"
+        className="w-1/2 hidden lg:flex"
         title="Присоединяйтесь к фловер сообществу"
         text="Оставайтесь на связи с близкими в любое время, в любом месте. Присоединяйтесь и начинайте общение!"
         linkAddr="/login"
         linkText="Уже есть аккаунт?"
       />
-    </>
+    </div>
   );
 }
