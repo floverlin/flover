@@ -18,14 +18,14 @@ VAPID_PRIVATE_KEY=vapid_private_key
 
 # Переменные окружения для docker-compose
 
-## Как у сервера, но без:
+Как у сервера, но без:
 
 ```
 ENV=prod
 DATABASE_URI=mongodb://mongo:27017
 ```
 
-## и с:
+и с:
 
 ```
 CLOUDPUB_TOKEN=token_from_cloubPub
