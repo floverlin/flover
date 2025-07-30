@@ -8,6 +8,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useRef } from "react";
 import ChatSearch from "./ChatSearch";
 import { useNavigate } from "react-router";
+import Scroller from "./Scroller";
 
 export default function Chatbar() {
   const {
@@ -51,27 +52,27 @@ export default function Chatbar() {
   if (isChatsLoading)
     // if (true)
     return (
-      <aside className="w-full h-full md:w-64 lg:w-100 flex flex-col border-r border-base-300">
-        <ChatSearch value="" />
-        <div className="flex justify-center items-center w-full h-[calc(100vh-106px)] md:h-[calc(100vh-122px)]">
+      <aside className="w-full h-full flex flex-col border-r border-base-300">
+        <ChatSearch disabled={true} />
+        <div className="w-full h-full flex items-center justify-center">
           <Loader2 className="size-12 animate-spin text-primary" />
         </div>
       </aside>
     );
 
   return (
-    <aside className="w-full h-full md:w-64 lg:w-100 flex flex-col border-r border-base-300">
+    <aside className="w-full h-full flex flex-col border-r border-base-300">
       <ChatSearch
         value={filterValue}
         onChange={(e) => setFilterValue(e.target.value)}
       />
 
-      <div className="overflow-y-scroll w-full h-full">
+      <Scroller>
         {chats.map((chat) => (
           <button
             key={chat.user._id}
             onClick={() => openChat(chat)}
-            className={`w-full py-2 px-3 flex hover:bg-base-200 hover:cursor-pointer transition-colors border-b border-base-300 relative ${
+            className={`w-full h-20 py-2 px-3 flex items-center hover:bg-base-200 hover:cursor-pointer transition-colors border-b border-base-300 relative ${
               selectedChat?._id === chat.user._id ? "bg-base-200" : ""
             }`}
           >
@@ -84,11 +85,11 @@ export default function Chatbar() {
               )}
             </div>
 
-            <div className="min-h-14 flex-1 flex flex-col items-start justify-around ml-6 pr-8 overflow-hidden">
+            <div className="h-full flex flex-col items-start justify-around ml-6 pr-8 overflow-hidden">
               <div className="font-medium truncate">{chat.user.username}</div>
               <div className="text-sm text-base-content/40 w-full flex items-center gap-1">
                 {chat.lastMessage?.image && (
-                  <Image className="size-4 flex-shrink-0" />
+                  <Image className="size-4 flex-shrink-0" /> // TODO
                 )}
                 <span className="truncate">
                   {chat.isTyping != null && chat.isTyping
@@ -119,7 +120,7 @@ export default function Chatbar() {
             Нет чатов
           </div>
         )}
-      </div>
+      </Scroller>
     </aside>
   );
 }

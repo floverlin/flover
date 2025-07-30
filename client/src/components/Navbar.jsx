@@ -8,7 +8,7 @@ export default function Navbar({ heigth }) {
 
   return (
     <header
-      className={`border-b border-base-300 fixed w-full top-0 z-50 backdrop-blur-sm bg-base-100/1 px-4 md:px-8 ${heigth}`}
+      className={`border-b border-base-300 fixed w-full top-0 z-50 backdrop-blur-sm bg-base-100/5 px-4 md:px-8 ${heigth}`}
     >
       <div className="flex items-center justify-between h-full">
         <Link to="/" className="flex items-center gap-2">

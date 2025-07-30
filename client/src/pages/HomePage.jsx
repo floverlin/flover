@@ -4,7 +4,6 @@ import Chatbar from "../components/Chatbar";
 import Chat from "../components/Chat";
 import NoChat from "../components/NoChat";
 import { useEffect } from "react";
-import NoScroll from "../components/NoScroll";
 import { useParams } from "react-router";
 import { axiosInstance } from "../lib/axios";
 
@@ -44,21 +43,21 @@ export default function HomePage() {
   }, [subscribeToMessages, unsubscribeFromMessages]);
 
   return (
-    <NoScroll className="flex">
+    <div className="flex h-full w-full">
       <div
-        className={`w-full md:w-64 lg:w-100 flex ${
+        className={`w-full md:w-64 lg:w-80 ${
           selectedChat ? "hidden md:flex" : ""
         }`}
       >
         <Chatbar />
       </div>
       <div
-        className={`w-full flex-1 flex bg-accent/10 ${
+        className={`flex-1 bg-accent/10 ${
           selectedChat ? "" : "hidden md:flex"
         }`}
       >
         {selectedChat ? <Chat /> : <NoChat />}
       </div>
-    </NoScroll>
+    </div>
   );
 }

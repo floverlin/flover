@@ -12,8 +12,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { Link } from "react-router";
-import NoScroll from "../components/NoScroll";
-import WelcomeImage from "../components/WelcomeImage";
+import Welcome from "../components/Welcome";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +42,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <NoScroll className="grid lg:grid-cols-2">
+    <>
       {/* left */}
       <div className="flex flex-col justify-center items-center p-6 md:p-12">
         <div className="w-full max-w-md">
@@ -166,13 +165,13 @@ export default function SignUpPage() {
         </div>
       </div>
       {/* right */}
-      <WelcomeImage
+      <Welcome
         className="hidden lg:flex"
         title="Присоединяйтесь к сообществу flover"
         text="Оставайтесь на связи с близкими в любое время, в любом месте. Присоединяйтесь и начинайте общение!"
         linkAddr="/login"
         linkText="Уже есть аккаунт?"
       />
-    </NoScroll>
+    </>
   );
 }

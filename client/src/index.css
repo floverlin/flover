@@ -4,6 +4,10 @@
   themes: all;
 }
 
+html {
+  @apply overflow-y-hidden;
+}
+
 input {
   @apply focus:outline-none;
 }

@@ -22,8 +22,8 @@ export default function App() {
   if (isCheckingAuth && !authUser)
     // if (true)
     return (
-      <Main className="justify-center gap-8">
-        <div className="geist flex gap-2 text-6xl font-bold text-primary">
+      <Main scrollable={false} className="justify-center gap-8">
+        <div className="flex gap-2 text-6xl font-bold text-primary">
           <Bird className="size-12" />
           flover
         </div>
@@ -32,52 +32,61 @@ export default function App() {
     );
 
   return (
-    <Main>
-      <Navbar heigth="h-12 md:h-16" />
+    <Theme>
+      <Geist>
+        <Navbar heigth="h-12 md:h-16" />
 
-      <div className="pt-12 md:pt-16 w-full min-h-screen">
-        <Routes>
-          <Route
-            path="/"
-            element={authUser ? <HomePage /> : <Navigate to="/login" />}
-          >
-            <Route path=":chatID" element={<></>} />
-          </Route>
-          <Route
-            path="/signup"
-            element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/login"
-            element={!authUser ? <LoginPage /> : <Navigate to="/" />}
-          />
-          <Route path="/colors" element={<ColorsPage />} />
-          <Route
-            path="/profile"
-            element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="*"
-            element={authUser ? <NotFoundPage /> : <Navigate to="/login" />}
-          />
-        </Routes>
-      </div>
+        <Main scrollable={false} className="pt-12 md:pt-16">
+          <Routes>
+            <Route
+              path="/"
+              element={authUser ? <HomePage /> : <Navigate to="/login" />}
+            >
+              <Route path=":chatID" element={<></>} />
+            </Route>
+            <Route
+              path="/signup"
+              element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/login"
+              element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+            />
+            <Route path="/colors" element={<ColorsPage />} />
+            <Route
+              path="/profile"
+              element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="*"
+              element={authUser ? <NotFoundPage /> : <Navigate to="/login" />}
+            />
+          </Routes>
 
-      <Toaster />
-    </Main>
+          <Toaster />
+        </Main>
+      </Geist>
+    </Theme>
   );
 }
 
-function Main({ children, className }) {
-  const { theme } = useThemeStore();
+function Main({ children, className, scrollable = true }) {
   return (
     <main
-      data-theme={theme}
-      className={`geist min-h-screen w-full flex flex-col items-center ${
-        className ? className : ""
-      }`}
+      className={`h-[100svh] w-screen flex flex-col items-center overflow-y-auto ${
+        scrollable ? "" : "overflow-y-hidden"
+      } ${className ? className : ""}`}
     >
       {children}
     </main>
   );
+}
+
+function Theme({ children }) {
+  const { theme } = useThemeStore();
+  return <div data-theme={theme}>{children}</div>;
+}
+
+function Geist({ children }) {
+  return <div className="geist">{children}</div>;
 }

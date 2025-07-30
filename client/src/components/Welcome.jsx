@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
-export default function WelcomeImage({
+export default function Welcome({
   className,
   title,
   text,

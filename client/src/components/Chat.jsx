@@ -7,6 +7,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { avatarPath, formatTime, imagePath, waitAndScroll } from "../lib/utils";
 import { useRef } from "react";
 import { Check, CheckCheck, Loader2 } from "lucide-react";
+import Scroller from "./Scroller";
 
 export default function Chat() {
   const {
@@ -70,7 +71,7 @@ export default function Chat() {
   if (isMessagesLoading || isImagesLoading)
     // if (true)
     return (
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full h-full">
         <ChatHeader />
         <div className="flex-1 w-full flex justify-center items-center">
           <Loader2 className="size-12 animate-spin text-primary" />
@@ -80,10 +81,10 @@ export default function Chat() {
     );
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full h-full">
       <ChatHeader />
-      <div
-        className="flex-1 w-full flex flex-col-reverse overflow-y-scroll p-2 md:p-4"
+      <Scroller
+        className="flex-1 flex flex-col-reverse p-2 md:p-4"
         ref={messageListRef}
       >
         {messages.map((message, idx) => (
@@ -95,12 +96,12 @@ export default function Chat() {
               message.senderID === authUser._id ? "chat-end" : "chat-start"
             }`}
           >
-            <div className="hidden md:inline chat-image avatar">
+            <div className="hidden md:block chat-image avatar">
               <div className="w-10 rounded-full">
                 <img
                   className={`hidden ${
                     messages[idx - 1]?.senderID !== message.senderID
-                      ? "md:inline"
+                      ? "md:block"
                       : ""
                   } chat-image avatar`}
                   src={
@@ -152,7 +153,7 @@ export default function Chat() {
             </div>
           </div>
         ))}
-      </div>
+      </Scroller>
       <InputPannel />
     </div>
   );

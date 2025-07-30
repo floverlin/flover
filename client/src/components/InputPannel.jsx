@@ -54,6 +54,7 @@ export default function InputPannel() {
 
   function handleSendMessage(e) {
     e.preventDefault();
+    if (inputRef.current) inputRef.current.focus();
     if (!text.trim() && !imagePreview) return;
     sendMessage({
       text: text.trim(),
@@ -64,9 +65,9 @@ export default function InputPannel() {
   }
 
   return (
-    <div className="min-h-14 w-full p-2 bg-accent/20 border-t-2 border-accent/30 relative">
+    <div className="h-14 w-full p-2 bg-accent/20 border-t-2 border-accent/30 relative">
       {imagePreview && (
-        <div className="absolute left-2 -top-22 mb-2 flex items-center gap-2">
+        <div className="absolute left-2 -top-22">
           <div className="relative">
             <img
               src={imagePreview}
@@ -84,11 +85,14 @@ export default function InputPannel() {
         </div>
       )}
 
-      <form onSubmit={handleSendMessage} className="flex items-center gap-1">
+      <form
+        onSubmit={handleSendMessage}
+        className="flex h-full items-center gap-1"
+      >
         <input
           ref={inputRef}
           type="text"
-          className="input w-full text-base"
+          className="input flex-1 text-base"
           placeholder="Напишите сообщение..."
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -103,19 +107,17 @@ export default function InputPannel() {
 
         <button
           type="button"
-          className={`btn border-none px-2 bg-primary/60 flex items-center justify-center hover:text-primary-content transition-all ${
+          className={`btn px-2 bg-primary/60 flex items-center justify-center hover:text-primary-content transition-all ${
             imagePreview ? "text-primary-content" : "text-primary-content/40"
           }`}
           onClick={() => imageInputRef.current?.click()}
         >
           <Image className="size-4 md:size-6" />
         </button>
+
         <button
-          onClick={() => {
-            if (inputRef.current) inputRef.current.focus();
-          }}
           type="submit"
-          className="btn border-none px-3 bg-primary/60 flex items-center justify-center text-primary-content"
+          className="btn px-3 bg-primary/60 flex items-center justify-center text-primary-content"
         >
           <Send className="size-4 md:size-6" />
         </button>

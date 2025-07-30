@@ -14,10 +14,10 @@ export default function ChatHeader() {
   }
 
   return (
-    <div className="p-1.5 px-4 border-b border-accent/30">
-      <div className="flex items-center gap-4">
+    <div className="py-1.5 px-4 border-b border-accent/30">
+      <div className="flex items-center">
         <button
-          className="flex items-center justify-center md:hidden hover:cursor-pointer"
+          className="flex items-center justify-center md:hidden hover:cursor-pointer mr-4"
           onClick={closeChat}
         >
           <ChevronLeft />
@@ -30,15 +30,15 @@ export default function ChatHeader() {
             </div>
           </div>
 
-          <div>
-            <h3 className="font-medium">{selectedChat.username}</h3>
-            <p className="text-sm text-base-content/70">
+          <div className="flex flex-col justify-around h-full">
+            <div className="font-medium">{selectedChat.username}</div>
+            <div className="text-sm text-base-content/70">
               {selectedChat.isTyping != null && selectedChat.isTyping
                 ? "Пишет..."
                 : onlineChats.includes(selectedChat._id)
                 ? "В сети"
                 : "Не в сети"}
-            </p>
+            </div>
           </div>
         </div>
 
