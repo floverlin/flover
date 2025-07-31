@@ -21,6 +21,7 @@ export default function Chatbar() {
   const { onlineChats } = useAuthStore();
   const [filterValue, setFilterValue] = useState("");
   const filterTimeoutRef = useRef(null);
+  const chatSearchRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +37,9 @@ export default function Chatbar() {
       clearTimeout(filterTimeoutRef.current);
     }
     filterTimeoutRef.current = setTimeout(() => {
-      getFilteredGlobalChats(filterValue);
+      getFilteredGlobalChats(filterValue).then(() => {
+        if (chatSearchRef.current) chatSearchRef.current.focus();
+      });
     }, 500);
   }, [filterValue, getChats, getFilteredGlobalChats]);
 
@@ -63,8 +66,11 @@ export default function Chatbar() {
   return (
     <aside className="w-full h-full flex flex-col border-r border-base-300">
       <ChatSearch
+        ref={chatSearchRef}
         value={filterValue}
-        onChange={(e) => setFilterValue(e.target.value)}
+        onChange={(e) => {
+          setFilterValue(e.target.value);
+        }}
       />
 
       <Scroller>
