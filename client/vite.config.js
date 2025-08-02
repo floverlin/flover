@@ -18,7 +18,7 @@ export default defineConfig({
       manifest: {
         name: "фловер",
         short_name: "фловер",
-        description: "web messager",
+        description: "web messenger",
         background_color: "#000000",
         theme_color: "#000000",
         start_url: "/",
