@@ -23,7 +23,7 @@ export default function Chat() {
   const observerRefs = useRef({});
 
   useEffect(() => {
-    if (!"serviceWorker" in navigator) return;
+    if (!("serviceWorker" in navigator)) return;
 
     (async function () {
       const reg = await navigator.serviceWorker.getRegistration();
