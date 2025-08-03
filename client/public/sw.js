@@ -2,7 +2,8 @@ import { precacheAndRoute } from "workbox-precaching";
 
 self.addEventListener("push", (e) => {
   const data = e.data.json();
-  const url = data.data?.url;
+  const { type, chatID, username } = data;
+  const url = `/${chatID}`;
 
   e.waitUntil(
     self.clients
@@ -18,10 +19,29 @@ self.addEventListener("push", (e) => {
 
         if (isVisible) return;
 
-        return self.registration.showNotification(data.title, {
-          body: data.body,
+        const tag = `from-chat-${chatID}`;
+        let title;
+        let body;
+        switch (type) {
+          case "new-message":
+            const message = data.message;
+            title = "Новое сообщение!";
+            body = `${username}: ${message.image ? "<изображение>" : ""} ${
+              message.text || ""
+            }`;
+            break;
+          default:
+            title = "Уведомление!";
+            body = "";
+            break;
+        }
+
+        return self.registration.showNotification(title, {
+          tag,
+          body,
+          renotify: true,
           icon: "/icon-192.png",
-          data: { url },
+          data: { url, chatID },
         });
       })
   );
