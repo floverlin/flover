@@ -9,7 +9,11 @@ html {
 }
 
 input {
-  @apply focus:outline-none;
+  @apply focus:outline-none focus:outline-0;
+}
+
+textarea {
+  @apply focus:outline-none focus:outline-0;
 }
 
 .geist {
