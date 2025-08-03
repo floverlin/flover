@@ -4,6 +4,7 @@ import { Image, Send, X } from "lucide-react";
 import { useRef } from "react";
 import { useChatStore } from "../store/useChatStore";
 import toast from "react-hot-toast";
+import InputPlus from "./InputPlus";
 
 export default function InputPannel() {
   const [text, setText] = useState("");
@@ -65,7 +66,7 @@ export default function InputPannel() {
   }
 
   return (
-    <div className="h-14 w-full p-2 bg-accent/20 border-t-2 border-accent/30 relative">
+    <div className="w-full p-2 bg-accent/20 border-t-2 border-accent/30 relative">
       {imagePreview && (
         <div className="absolute left-2 -top-22">
           <div className="relative">
@@ -85,17 +86,13 @@ export default function InputPannel() {
         </div>
       )}
 
-      <form
-        onSubmit={handleSendMessage}
-        className="flex h-full items-center gap-1"
-      >
-        <input
+      <form onSubmit={handleSendMessage} className="flex items-end gap-1">
+        <InputPlus
           ref={inputRef}
-          type="text"
-          className="input flex-1 text-base"
           placeholder="Напишите сообщение..."
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onEnter={handleSendMessage}
         />
         <input
           type="file"

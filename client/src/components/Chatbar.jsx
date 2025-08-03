@@ -9,6 +9,7 @@ import { useRef } from "react";
 import ChatSearch from "./ChatSearch";
 import { useNavigate } from "react-router";
 import Scroller from "./Scroller";
+import Writing from "./Writing";
 
 export default function Chatbar() {
   const {
@@ -99,7 +100,7 @@ export default function Chatbar() {
                 )}
                 <span className="truncate">
                   {chat.isTyping != null && chat.isTyping
-                    ? "Пишет..."
+                    ? <Writing text="Пишет" />
                     : chat.lastMessage?.text}
                 </span>
               </div>

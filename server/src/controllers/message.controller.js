@@ -111,13 +111,24 @@ export async function sendMessage(req, res) {
     if (recieverIDs) io.to(Array.from(recieverIDs)).emit("x-message", message);
 
     const reciever = await User.findById(chatID);
+    // const pushPayload = {
+    //   title: "Новое сообщение!",
+    //   body: `${req.user.username}: ${message.text || "прислал(а) изображение"}`,
+    //   data: {
+    //     senderID: userID,
+    //   },
+    // };
+
     const pushPayload = {
-      title: "Новое сообщение!",
-      body: `${req.user.username}: ${message.text || "прислал(а) изображение"}`,
-      data: {
-        url: `/${userID}`,
+      type: "new-message",
+      chatID: userID,
+      username: req.user.username,
+      message: {
+        text: message.text,
+        image: message.image,
       },
     };
+
     await sendPush(reciever, pushPayload);
 
     res.status(201).json(message);

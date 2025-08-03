@@ -3,6 +3,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 import { avatarPath } from "../lib/utils";
 import { useNavigate } from "react-router";
+import Writing from "./Writing";
 
 export default function ChatHeader() {
   const { selectedChat } = useChatStore();
@@ -33,11 +34,13 @@ export default function ChatHeader() {
           <div className="flex flex-col justify-around h-full">
             <div className="font-medium">{selectedChat.username}</div>
             <div className="text-sm text-base-content/70">
-              {selectedChat.isTyping != null && selectedChat.isTyping
-                ? "Пишет..."
-                : onlineChats.includes(selectedChat._id)
-                ? "В сети"
-                : "Не в сети"}
+              {selectedChat.isTyping != null && selectedChat.isTyping ? (
+                <Writing text="Пишет" />
+              ) : onlineChats.includes(selectedChat._id) ? (
+                "В сети"
+              ) : (
+                "Не в сети"
+              )}
             </div>
           </div>
         </div>

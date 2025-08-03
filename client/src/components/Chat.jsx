@@ -22,6 +22,22 @@ export default function Chat() {
   const messageListRef = useRef(null);
   const observerRefs = useRef({});
 
+  useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+
+    (async function () {
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (!reg) return;
+      const notifs = await reg.getNotifications({ includeTriggered: true });
+      for (const notif of notifs) {
+        const chatID = notif.data?.chatID;
+        if (chatID === selectedChat._id) {
+          notif.close();
+        }
+      }
+    })();
+  }, [selectedChat]);
+
   useLayoutEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
