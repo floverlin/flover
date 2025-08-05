@@ -4,7 +4,9 @@ import webPush from "web-push";
 export async function sendPush(reciever, payload) {
   for (const subscription of reciever.pushSubscriptions) {
     webPush
-      .sendNotification(subscription, JSON.stringify(payload))
+      .sendNotification(subscription, JSON.stringify(payload), {
+        urgency: webPush.supportedUrgency.HIGH,
+      })
       .catch(async (err) => {
         if (err.statusCode === 410 || err.statusCode === 404)
           await User.findByIdAndUpdate(reciever._id, {
