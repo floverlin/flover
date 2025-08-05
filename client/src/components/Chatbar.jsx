@@ -12,14 +12,15 @@ import Scroller from "./Scroller";
 import Writing from "./Writing";
 
 export default function Chatbar() {
-  const {
-    getChats,
-    getFilteredGlobalChats,
-    chats,
-    selectedChat,
-    isChatsLoading,
-  } = useChatStore();
-  const { onlineChats } = useAuthStore();
+  const getChats = useChatStore((state) => state.getChats);
+  const getFilteredGlobalChats = useChatStore(
+    (state) => state.getFilteredGlobalChats
+  );
+  const chats = useChatStore((state) => state.chats);
+  const selectedChat = useChatStore((state) => state.selectedChat);
+  const isChatsLoading = useChatStore((state) => state.isChatsLoading);
+  const onlineChats = useAuthStore((state) => state.onlineChats);
+
   const [filterValue, setFilterValue] = useState("");
   const filterTimeoutRef = useRef(null);
   const chatSearchRef = useRef(null);
@@ -39,7 +40,7 @@ export default function Chatbar() {
     }
     filterTimeoutRef.current = setTimeout(() => {
       getFilteredGlobalChats(filterValue).then(() => {
-        if (chatSearchRef.current) chatSearchRef.current.focus();
+        //if (chatSearchRef.current) chatSearchRef.current.focus();
       });
     }, 500);
   }, [filterValue, getChats, getFilteredGlobalChats]);
@@ -99,9 +100,11 @@ export default function Chatbar() {
                   <Image className="size-4 flex-shrink-0" /> // TODO
                 )}
                 <span className="truncate">
-                  {chat.isTyping != null && chat.isTyping
-                    ? <Writing text="Пишет" />
-                    : chat.lastMessage?.text}
+                  {chat.isTyping != null && chat.isTyping ? (
+                    <Writing text="Пишет" />
+                  ) : (
+                    chat.lastMessage?.text
+                  )}
                 </span>
               </div>
             </div>

@@ -5,7 +5,7 @@ export async function sendPush(reciever, payload) {
   for (const subscription of reciever.pushSubscriptions) {
     webPush
       .sendNotification(subscription, JSON.stringify(payload), {
-        urgency: webPush.supportedUrgency.HIGH,
+        urgency: "high",
       })
       .catch(async (err) => {
         if (err.statusCode === 410 || err.statusCode === 404)
