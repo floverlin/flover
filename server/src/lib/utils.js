@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import { createHash } from "node:crypto";
 import process from "node:process";
 import { Buffer } from "node:buffer";
+import { tryCatcher } from "@flover/jsutils";
 
 /** @return {string} */
 export function generateToken(userID, res) {
@@ -32,11 +33,9 @@ export function internalError(res, error, ...traceback) {
 
 export async function saveImage(base64Image, folder, ...keys) {
   try {
-    try {
-      await fsp.access(folder);
-    } catch {
+    await tryCatcher(fsp.access, folder).onErrorAwait(async () => {
       await fsp.mkdir(folder, { recursive: true });
-    }
+    });
 
     const matches = base64Image.match(/^data:([A-Za-z-+\\/]+);base64,(.+)$/);
     if (!matches || matches.length !== 3) {
@@ -62,15 +61,12 @@ export async function saveImage(base64Image, folder, ...keys) {
 }
 
 export async function deleteImage(fileName, folder) {
-  try {
-    const filePath = `${folder}/${fileName}`;
-    try {
-      await fsp.access(filePath);
-      await fsp.unlink(filePath);
-    } catch {
-      /* empty */
-    }
-  } catch (error) {
+  const filePath = `${folder}/${fileName}`;
+  const [_, error] = await tryCatcher(async () => {
+    await fsp.access(filePath);
+    await fsp.unlink(filePath);
+  });
+  if (error) {
     throw new Error(`delete image: ${error}`);
   }
 }
